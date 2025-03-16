@@ -154,12 +154,261 @@ class UPIPayment extends Payment {
     }
 }
 
+// Admin class
+class Admin {
+    Furniture furnitureShop;
+
+    // Constructor
+    public Admin(Furniture furnitureShop) {
+        this.furnitureShop = furnitureShop;
+    }
+
+    // Add a new product to the catalog
+    public void addProduct(String category, String productName, double price) {
+        switch (category) {
+            case "sofa":
+                if (furnitureShop.sofaNames.length < 15) {
+                    String[] newSofaNames = new String[furnitureShop.sofaNames.length + 1];
+                    double[] newSofaPrices = new double[furnitureShop.sofaPrices.length + 1];
+                    for (int i = 0; i < furnitureShop.sofaNames.length; i++) {
+                        newSofaNames[i] = furnitureShop.sofaNames[i];
+                        newSofaPrices[i] = furnitureShop.sofaPrices[i];
+                    }
+                    newSofaNames[furnitureShop.sofaNames.length] = productName;
+                    newSofaPrices[furnitureShop.sofaPrices.length] = price;
+                    furnitureShop.sofaNames = newSofaNames;
+                    furnitureShop.sofaPrices = newSofaPrices;
+                    System.out.println("| Product added successfully!     |");
+                } else {
+                    System.out.println("| Maximum limit of 15 products reached for Sofa. |");
+                }
+                break;
+            case "dinningTable":
+                if (furnitureShop.dinningTableNames.length < 15) {
+                    String[] newDinningTableNames = new String[furnitureShop.dinningTableNames.length + 1];
+                    double[] newDinningTablePrices = new double[furnitureShop.dinningTablePrices.length + 1];
+                    for (int i = 0; i < furnitureShop.dinningTableNames.length; i++) {
+                        newDinningTableNames[i] = furnitureShop.dinningTableNames[i];
+                        newDinningTablePrices[i] = furnitureShop.dinningTablePrices[i];
+                    }
+                    newDinningTableNames[furnitureShop.dinningTableNames.length] = productName;
+                    newDinningTablePrices[furnitureShop.dinningTablePrices.length] = price;
+                    furnitureShop.dinningTableNames = newDinningTableNames;
+                    furnitureShop.dinningTablePrices = newDinningTablePrices;
+                    System.out.println("| Product added successfully!     |");
+                } else {
+                    System.out.println("| Maximum limit of 15 products reached for Dining Table. |");
+                }
+                break;
+            case "bed":
+                if (furnitureShop.bedNames.length < 15) {
+                    String[] newBedNames = new String[furnitureShop.bedNames.length + 1];
+                    double[] newBedPrices = new double[furnitureShop.bedPrices.length + 1];
+                    for (int i = 0; i < furnitureShop.bedNames.length; i++) {
+                        newBedNames[i] = furnitureShop.bedNames[i];
+                        newBedPrices[i] = furnitureShop.bedPrices[i];
+                    }
+                    newBedNames[furnitureShop.bedNames.length] = productName;
+                    newBedPrices[furnitureShop.bedPrices.length] = price;
+                    furnitureShop.bedNames = newBedNames;
+                    furnitureShop.bedPrices = newBedPrices;
+                    System.out.println("| Product added successfully!     |");
+                } else {
+                    System.out.println("| Maximum limit of 15 products reached for Bed. |");
+                }
+                break;
+            case "wardrobe":
+                if (furnitureShop.wardrobeNames.length < 15) {
+                    String[] newWardrobeNames = new String[furnitureShop.wardrobeNames.length + 1];
+                    double[] newWardrobePrices = new double[furnitureShop.wardrobePrices.length + 1];
+                    for (int i = 0; i < furnitureShop.wardrobeNames.length; i++) {
+                        newWardrobeNames[i] = furnitureShop.wardrobeNames[i];
+                        newWardrobePrices[i] = furnitureShop.wardrobePrices[i];
+                    }
+                    newWardrobeNames[furnitureShop.wardrobeNames.length] = productName;
+                    newWardrobePrices[furnitureShop.wardrobePrices.length] = price;
+                    furnitureShop.wardrobeNames = newWardrobeNames;
+                    furnitureShop.wardrobePrices = newWardrobePrices;
+                    System.out.println("| Product added successfully!     |");
+                } else {
+                    System.out.println("| Maximum limit of 15 products reached for Wardrobe. |");
+                }
+                break;
+            default:
+                System.out.println("| Invalid category.               |");
+        }
+    }
+
+    // Remove a product from the catalog
+    public void removeProduct(String category, int index) {
+        switch (category) {
+            case "sofa":
+                if (index >= 0 && index < furnitureShop.sofaNames.length) {
+                    String[] newSofaNames = new String[furnitureShop.sofaNames.length - 1];
+                    double[] newSofaPrices = new double[furnitureShop.sofaPrices.length - 1];
+                    for (int i = 0, j = 0; i < furnitureShop.sofaNames.length; i++) {
+                        if (i != index) {
+                            newSofaNames[j] = furnitureShop.sofaNames[i];
+                            newSofaPrices[j] = furnitureShop.sofaPrices[i];
+                            j++;
+                        }
+                    }
+                    furnitureShop.sofaNames = newSofaNames;
+                    furnitureShop.sofaPrices = newSofaPrices;
+                    System.out.println("| Product removed successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            case "dinningTable":
+                if (index >= 0 && index < furnitureShop.dinningTableNames.length) {
+                    String[] newDinningTableNames = new String[furnitureShop.dinningTableNames.length - 1];
+                    double[] newDinningTablePrices = new double[furnitureShop.dinningTablePrices.length - 1];
+                    for (int i = 0, j = 0; i < furnitureShop.dinningTableNames.length; i++) {
+                        if (i != index) {
+                            newDinningTableNames[j] = furnitureShop.dinningTableNames[i];
+                            newDinningTablePrices[j] = furnitureShop.dinningTablePrices[i];
+                            j++;
+                        }
+                    }
+                    furnitureShop.dinningTableNames = newDinningTableNames;
+                    furnitureShop.dinningTablePrices = newDinningTablePrices;
+                    System.out.println("| Product removed successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            case "bed":
+                if (index >= 0 && index < furnitureShop.bedNames.length) {
+                    String[] newBedNames = new String[furnitureShop.bedNames.length - 1];
+                    double[] newBedPrices = new double[furnitureShop.bedPrices.length - 1];
+                    for (int i = 0, j = 0; i < furnitureShop.bedNames.length; i++) {
+                        if (i != index) {
+                            newBedNames[j] = furnitureShop.bedNames[i];
+                            newBedPrices[j] = furnitureShop.bedPrices[i];
+                            j++;
+                        }
+                    }
+                    furnitureShop.bedNames = newBedNames;
+                    furnitureShop.bedPrices = newBedPrices;
+                    System.out.println("| Product removed successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            case "wardrobe":
+                if (index >= 0 && index < furnitureShop.wardrobeNames.length) {
+                    String[] newWardrobeNames = new String[furnitureShop.wardrobeNames.length - 1];
+                    double[] newWardrobePrices = new double[furnitureShop.wardrobePrices.length - 1];
+                    for (int i = 0, j = 0; i < furnitureShop.wardrobeNames.length; i++) {
+                        if (i != index) {
+                            newWardrobeNames[j] = furnitureShop.wardrobeNames[i];
+                            newWardrobePrices[j] = furnitureShop.wardrobePrices[i];
+                            j++;
+                        }
+                    }
+                    furnitureShop.wardrobeNames = newWardrobeNames;
+                    furnitureShop.wardrobePrices = newWardrobePrices;
+                    System.out.println("| Product removed successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            default:
+                System.out.println("| Invalid category.               |");
+        }
+    }
+
+    // Update a product in the catalog
+    public void updateProduct(String category, int index, String newProductName, double newPrice) {
+        switch (category) {
+            case "sofa":
+                if (index >= 0 && index < furnitureShop.sofaNames.length) {
+                    furnitureShop.sofaNames[index] = newProductName;
+                    furnitureShop.sofaPrices[index] = newPrice;
+                    System.out.println("| Product updated successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            case "dinningTable":
+                if (index >= 0 && index < furnitureShop.dinningTableNames.length) {
+                    furnitureShop.dinningTableNames[index] = newProductName;
+                    furnitureShop.dinningTablePrices[index] = newPrice;
+                    System.out.println("| Product updated successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            case "bed":
+                if (index >= 0 && index < furnitureShop.bedNames.length) {
+                    furnitureShop.bedNames[index] = newProductName;
+                    furnitureShop.bedPrices[index] = newPrice;
+                    System.out.println("| Product updated successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            case "wardrobe":
+                if (index >= 0 && index < furnitureShop.wardrobeNames.length) {
+                    furnitureShop.wardrobeNames[index] = newProductName;
+                    furnitureShop.wardrobePrices[index] = newPrice;
+                    System.out.println("| Product updated successfully!    |");
+                } else {
+                    System.out.println("| Invalid index.                   |");
+                }
+                break;
+            default:
+                System.out.println("| Invalid category.               |");
+        }
+    }
+}
+
 // Furniture class
 class Furniture {
     Scanner sc;
     User user;
     String[][] orderHistory; // Stores order history
     int orderCount; // Tracks the number of orders
+
+    // Product arrays
+    String[] sofaNames = {"Black Oak Lewis Bolstered Lounge Entryway Bench Three Seater Sofa", 
+                          "Home Furniture Wooden Sofa For Living-Room", 
+                          "Solid Wood Furniture Sheesham Wood Sofa", 
+                          "Solimo Roasio 1 Seater Sofa", 
+                          "Enchanting Design Accent Sofa Chair", 
+                          "Innovate Reclainer & Sofa", 
+                          "Sofa Crafter Solid Wood Super Soft Sofa"};
+    double[] sofaPrices = {13999.00, 10799.00, 19998.00, 9799.00, 27899.00, 32869.00, 17499.00};
+
+    String[] dinningTableNames = {"Wakefit Dining Table", 
+                                  "Home Center Diana Beech Wood Veneer Finish", 
+                                  "Drifting Wood Zig Zag Solid Sheesham Wood Dining Table", 
+                                  "Solimo Indus Glass Round Dining Table", 
+                                  "OAK Nest Supreme Oak Circular Dining Table"};
+    double[] dinningTablePrices = {30710.00, 12999.00, 15969.00, 14599.00, 8500.00};
+
+    String[] bedNames = {"Caspian Furniture Wood Textured Single Bed", 
+                         "Studio Kook Tribe Leaf with Headboard Wood Single Bed", 
+                         "Solimo Lincum Single Bed", 
+                         "Wakefit Double Bed", 
+                         "Solid Sheesham Wood Mayor Palang King Size Bed", 
+                         "Geetanjali Decor Grace King Size Bed", 
+                         "Vaidik Furniture Solid Sheesham Wood King Size Bed"};
+    double[] bedPrices = {7000.00, 26487.00, 28099.00, 25410.00, 68999.00, 53999.00, 32599.00};
+
+    String[] wardrobeNames = {"Solimo 2-Door Foldable Wardrobe", 
+                              "Solimo 3-Door Foldable Wardrobe", 
+                              "Lifewit 6-Tiers Multipurpose Foldable Wardrobe", 
+                              "CITRODA Multipurpose Shoe Wardrobe", 
+                              "AYSIS DIY Shoe Rack Organizer", 
+                              "Solimo Multipurpose Rack for Shoes", 
+                              "FLIPZON Baby Wardrobe Plastic Multipurpose 6 Shelve Wardrobe", 
+                              "BucketList Baby Wardrobe Door Plastic Sheet Kids Wardrobe", 
+                              "Nilkamal Freedome Big 1 (FB1) Plastic Cabinet", 
+                              "Sharan Almirah Multi Purpose Wardrobe", 
+                              "HEKAMI Interiors 4 Doors Wardrobe"};
+    double[] wardrobePrices = {2069.00, 2349.00, 1399.00, 2149.00, 2147.00, 1369.00, 1095.00, 3969.00, 9999.00, 15507.00, 36969.00};
 
     public Furniture() {
         sc = new Scanner(System.in);
@@ -174,9 +423,10 @@ class Furniture {
         System.out.println("====================================");
         System.out.println("| 1. Login                         |");
         System.out.println("| 2. Signup                        |");
+        System.out.println("| 3. Admin Login                   |");
         System.out.println("====================================");
         System.out.print("| Enter your choice: ");
-        int choice = getValidChoice(1, 2);
+        int choice = getValidChoice(1, 3);
 
         switch (choice) {
             case 1:
@@ -185,10 +435,170 @@ class Furniture {
             case 2:
                 signup();
                 break;
+            case 3:
+                adminLogin();
+                break;
             default:
                 System.out.println("| Invalid choice. Exiting...       |");
                 System.out.println("====================================");
                 System.exit(0);
+        }
+    }
+
+    // Admin login method
+    private void adminLogin() {
+        System.out.println("\n====================================");
+        System.out.println("|           ADMIN LOGIN           |");
+        System.out.println("====================================");
+        System.out.print("| Enter admin username: ");
+        String username = sc.nextLine();
+        System.out.print("| Enter admin password: ");
+        String password = sc.nextLine();
+
+        // Simulate admin login validation
+        if (username.equals("admin") && password.equals("admin123")) {
+            System.out.println("====================================");
+            System.out.println("| Admin login successful!          |");
+            System.out.println("====================================");
+            adminMenu();
+        } else {
+            System.out.println("====================================");
+            System.out.println("| Invalid admin credentials.        |");
+            System.out.println("====================================");
+            initializeUser(); // Restart login/signup process
+        }
+    }
+
+    // Admin menu
+    private void adminMenu() {
+        Admin admin = new Admin(this);
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n====================================");
+            System.out.println("|           ADMIN MENU            |");
+            System.out.println("====================================");
+            System.out.println("| 1. Manage Sofas                 |");
+            System.out.println("| 2. Manage Dining Tables         |");
+            System.out.println("| 3. Manage Beds                  |");
+            System.out.println("| 4. Manage Wardrobes             |");
+            System.out.println("| 5. Exit                         |");
+            System.out.println("====================================");
+            System.out.print("| Enter your choice: ");
+            int choice = getValidChoice(1, 5);
+
+            switch (choice) {
+                case 1:
+                    manageProducts("sofa", admin);
+                    break;
+                case 2:
+                    manageProducts("dinningTable", admin);
+                    break;
+                case 3:
+                    manageProducts("bed", admin);
+                    break;
+                case 4:
+                    manageProducts("wardrobe", admin);
+                    break;
+                case 5:
+                    exit = true;
+                    System.out.println("\n====================================");
+                    System.out.println("| Exiting admin menu.              |");
+                    System.out.println("====================================");
+                    break;
+                default:
+                    System.out.println("\n====================================");
+                    System.out.println("| Invalid choice.                  |");
+                    System.out.println("====================================");
+            }
+        }
+    }
+
+    // Manage products for a category
+    private void manageProducts(String category, Admin admin) {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n====================================");
+            System.out.println("|       MANAGE " + category.toUpperCase() + "       |");
+            System.out.println("====================================");
+            System.out.println("| 1. Add Product                  |");
+            System.out.println("| 2. Remove Product               |");
+            System.out.println("| 3. Update Product               |");
+            System.out.println("| 4. View Products                |");
+            System.out.println("| 5. Exit                         |");
+            System.out.println("====================================");
+            System.out.print("| Enter your choice: ");
+            int choice = getValidChoice(1, 5);
+
+            switch (choice) {
+                case 1:
+                    System.out.print("| Enter product name: ");
+                    String productName = sc.nextLine();
+                    System.out.print("| Enter product price: ");
+                    double price = sc.nextDouble();
+                    sc.nextLine(); // Consume newline
+                    admin.addProduct(category, productName, price);
+                    break;
+                case 2:
+                    System.out.print("| Enter product index to remove: ");
+                    int removeIndex = sc.nextInt();
+                    sc.nextLine(); // Consume newline
+                    admin.removeProduct(category, removeIndex - 1);
+                    break;
+                case 3:
+                    System.out.print("| Enter product index to update: ");
+                    int updateIndex = sc.nextInt();
+                    sc.nextLine(); // Consume newline
+                    System.out.print("| Enter new product name: ");
+                    String newProductName = sc.nextLine();
+                    System.out.print("| Enter new product price: ");
+                    double newPrice = sc.nextDouble();
+                    sc.nextLine(); // Consume newline
+                    admin.updateProduct(category, updateIndex - 1, newProductName, newPrice);
+                    break;
+                case 4:
+                    System.out.println("\n====================================");
+                    System.out.println("|       " + category.toUpperCase() + " CATALOG       |");
+                    System.out.println("====================================");
+                    String[] productNames;
+                    double[] productPrices;
+                    switch (category) {
+                        case "sofa":
+                            productNames = sofaNames;
+                            productPrices = sofaPrices;
+                            break;
+                        case "dinningTable":
+                            productNames = dinningTableNames;
+                            productPrices = dinningTablePrices;
+                            break;
+                        case "bed":
+                            productNames = bedNames;
+                            productPrices = bedPrices;
+                            break;
+                        case "wardrobe":
+                            productNames = wardrobeNames;
+                            productPrices = wardrobePrices;
+                            break;
+                        default:
+                            productNames = new String[0];
+                            productPrices = new double[0];
+                            break;
+                    }
+                    for (int i = 0; i < productNames.length; i++) {
+                        System.out.println("| " + (i + 1) + ". " + productNames[i] + " - Price: " + productPrices[i] + " |");
+                    }
+                    System.out.println("====================================");
+                    break;
+                case 5:
+                    exit = true;
+                    System.out.println("\n====================================");
+                    System.out.println("| Exiting " + category.toUpperCase() + " management. |");
+                    System.out.println("====================================");
+                    break;
+                default:
+                    System.out.println("\n====================================");
+                    System.out.println("| Invalid choice.                  |");
+                    System.out.println("====================================");
+            }
         }
     }
 
@@ -385,15 +795,6 @@ class Furniture {
         System.out.println("\n====================================");
         System.out.println("|           SOFA CATALOG           |");
         System.out.println("====================================");
-        String[] sofaNames = {"Black Oak Lewis Bolstered Lounge Entryway Bench Three Seater Sofa", 
-                              "Home Furniture Wooden Sofa For Living-Room", 
-                              "Solid Wood Furniture Sheesham Wood Sofa", 
-                              "Solimo Roasio 1 Seater Sofa", 
-                              "Enchanting Design Accent Sofa Chair", 
-                              "Innovate Reclainer & Sofa", 
-                              "Sofa Crafter Solid Wood Super Soft Sofa"};
-        double[] sofaPrices = {13999.00, 10799.00, 19998.00, 9799.00, 27899.00, 32869.00, 17499.00};
-        
         System.out.println("| Available Sofas:                 |");
         for (int i = 0; i < sofaNames.length; i++) {
             System.out.println("| " + (i + 1) + ". " + sofaNames[i] + " - Price: " + sofaPrices[i] + " |");
@@ -422,13 +823,6 @@ class Furniture {
         System.out.println("\n====================================");
         System.out.println("|       DINING TABLE CATALOG       |");
         System.out.println("====================================");
-        String[] dinningTableNames = {"Wakefit Dining Table", 
-                                      "Home Center Diana Beech Wood Veneer Finish", 
-                                      "Drifting Wood Zig Zag Solid Sheesham Wood Dining Table", 
-                                      "Solimo Indus Glass Round Dining Table", 
-                                      "OAK Nest Supreme Oak Circular Dining Table"};
-        double[] dinningTablePrices = {30710.00, 12999.00, 15969.00, 14599.00, 8500.00};
-        
         System.out.println("| Available Dining Tables:         |");
         for (int i = 0; i < dinningTableNames.length; i++) {
             System.out.println("| " + (i + 1) + ". " + dinningTableNames[i] + " - Price: " + dinningTablePrices[i] + " |");
@@ -457,15 +851,6 @@ class Furniture {
         System.out.println("\n====================================");
         System.out.println("|           BED CATALOG            |");
         System.out.println("====================================");
-        String[] bedNames = {"Caspian Furniture Wood Textured Single Bed", 
-                             "Studio Kook Tribe Leaf with Headboard Wood Single Bed", 
-                             "Solimo Lincum Single Bed", 
-                             "Wakefit Double Bed", 
-                             "Solid Sheesham Wood Mayor Palang King Size Bed", 
-                             "Geetanjali Decor Grace King Size Bed", 
-                             "Vaidik Furniture Solid Sheesham Wood King Size Bed"};
-        double[] bedPrices = {7000.00, 26487.00, 28099.00, 25410.00, 68999.00, 53999.00, 32599.00};
-        
         System.out.println("| Available Beds:                  |");
         for (int i = 0; i < bedNames.length; i++) {
             System.out.println("| " + (i + 1) + ". " + bedNames[i] + " - Price: " + bedPrices[i] + " |");
@@ -494,19 +879,6 @@ class Furniture {
         System.out.println("\n====================================");
         System.out.println("|         WARDROBE CATALOG         |");
         System.out.println("====================================");
-        String[] wardrobeNames = {"Solimo 2-Door Foldable Wardrobe", 
-                                  "Solimo 3-Door Foldable Wardrobe", 
-                                  "Lifewit 6-Tiers Multipurpose Foldable Wardrobe", 
-                                  "CITRODA Multipurpose Shoe Wardrobe", 
-                                  "AYSIS DIY Shoe Rack Organizer", 
-                                  "Solimo Multipurpose Rack for Shoes", 
-                                  "FLIPZON Baby Wardrobe Plastic Multipurpose 6 Shelve Wardrobe", 
-                                  "BucketList Baby Wardrobe Door Plastic Sheet Kids Wardrobe", 
-                                  "Nilkamal Freedome Big 1 (FB1) Plastic Cabinet", 
-                                  "Sharan Almirah Multi Purpose Wardrobe", 
-                                  "HEKAMI Interiors 4 Doors Wardrobe"};
-        double[] wardrobePrices = {2069.00, 2349.00, 1399.00, 2149.00, 2147.00, 1369.00, 1095.00, 3969.00, 9999.00, 15507.00, 36969.00};
-        
         System.out.println("| Available Wardrobes:             |");
         for (int i = 0; i < wardrobeNames.length; i++) {
             System.out.println("| " + (i + 1) + ". " + wardrobeNames[i] + " - Price: " + wardrobePrices[i] + " |");
