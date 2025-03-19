@@ -31,8 +31,8 @@ class User {
     }
 }
 
-// Payment class (Parent class)
-class Payment {
+// Abstract Payment class
+abstract class Payment {
     double totalBill;
 
     // Constructor
@@ -40,18 +40,22 @@ class Payment {
         this.totalBill = totalBill;
     }
 
-    // Process payment
-    public void processPayment() {
-        System.out.println("\n====================================");
-        System.out.println("|   PROCESSING PAYMENT...          |");
-        System.out.println("====================================");
-        System.out.println("| Total Bill: " + totalBill + "    |");
-        System.out.println("====================================");
-    }
+    // Abstract method to process payment
+    public abstract void processPayment();
+}
+
+// Discountable Interface
+interface Discountable {
+    double applyDiscount(double totalBill);
+}
+
+// Refundable Interface
+interface Refundable {
+    void processRefund();
 }
 
 // CardPayment class (Child class of Payment)
-class CardPayment extends Payment {
+class CardPayment extends Payment implements Discountable, Refundable {
     String cardNumber;
     String expiryDate;
     String cvv;
@@ -104,6 +108,12 @@ class CardPayment extends Payment {
         return true;
     }
 
+    // Apply discount for card payments
+    @Override
+    public double applyDiscount(double totalBill) {
+        return totalBill * 0.95; // 5% discount for card payments
+    }
+
     // Process card payment
     @Override
     public void processPayment() {
@@ -111,18 +121,30 @@ class CardPayment extends Payment {
         System.out.println("|   PROCESSING CARD PAYMENT...     |");
         System.out.println("====================================");
         if (isValidCard()) {
+            double discountedTotal = applyDiscount(totalBill);
             System.out.println("| Payment Successful!             |");
-            System.out.println("| Amount Paid: " + totalBill + " |");
+            System.out.println("| Amount Paid: " + discountedTotal + " |");
         } else {
             System.out.println("| Invalid Card Details.           |");
             System.out.println("| Payment Failed.                 |");
         }
         System.out.println("====================================");
     }
+
+    // Process refund for card payments
+    @Override
+    public void processRefund() {
+        System.out.println("\n====================================");
+        System.out.println("|   PROCESSING REFUND...           |");
+        System.out.println("====================================");
+        System.out.println("| Refund Successful!              |");
+        System.out.println("| Amount Refunded: " + totalBill + " |");
+        System.out.println("====================================");
+    }
 }
 
 // UPI Payment class (Child class of Payment)
-class UPIPayment extends Payment {
+class UPIPayment extends Payment implements Discountable, Refundable {
     String upiID;
 
     // Constructor
@@ -131,10 +153,37 @@ class UPIPayment extends Payment {
         this.upiID = upiID;
     }
 
-    // Validate UPI ID
+    // Validate UPI ID without using matches method
     private boolean isValidUPI() {
         // UPI ID format: example@upi
-        return upiID.matches("[a-zA-Z0-9]+@[a-zA-Z]+");
+        int atIndex = upiID.indexOf('@');
+        if (atIndex == -1 || atIndex == 0 || atIndex == upiID.length() - 1) {
+            return false; // No '@' or '@' at the start/end
+        }
+
+        // Check characters before '@' (should be alphanumeric)
+        String beforeAt = upiID.substring(0, atIndex);
+        for (char c : beforeAt.toCharArray()) {
+            if (!Character.isLetterOrDigit(c)) {
+                return false;
+            }
+        }
+
+        // Check characters after '@' (should be alphabetic)
+        String afterAt = upiID.substring(atIndex + 1);
+        for (char c : afterAt.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Apply discount for UPI payments
+    @Override
+    public double applyDiscount(double totalBill) {
+        return totalBill * 0.90; // 10% discount for UPI payments
     }
 
     // Process UPI payment
@@ -144,12 +193,24 @@ class UPIPayment extends Payment {
         System.out.println("|   PROCESSING UPI PAYMENT...      |");
         System.out.println("====================================");
         if (isValidUPI()) {
+            double discountedTotal = applyDiscount(totalBill);
             System.out.println("| Payment Successful!             |");
-            System.out.println("| Amount Paid: " + totalBill + " |");
+            System.out.println("| Amount Paid: " + discountedTotal + " |");
         } else {
             System.out.println("| Invalid UPI ID.                 |");
             System.out.println("| Payment Failed.                 |");
         }
+        System.out.println("====================================");
+    }
+
+    // Process refund for UPI payments
+    @Override
+    public void processRefund() {
+        System.out.println("\n====================================");
+        System.out.println("|   PROCESSING REFUND...           |");
+        System.out.println("====================================");
+        System.out.println("| Refund Successful!              |");
+        System.out.println("| Amount Refunded: " + totalBill + " |");
         System.out.println("====================================");
     }
 }
@@ -372,42 +433,42 @@ class Furniture {
     int orderCount; // Tracks the number of orders
 
     // Product arrays
-    String[] sofaNames = {"Black Oak Lewis Bolstered Lounge Entryway Bench Three Seater Sofa", 
-                          "Home Furniture Wooden Sofa For Living-Room", 
-                          "Solid Wood Furniture Sheesham Wood Sofa", 
-                          "Solimo Roasio 1 Seater Sofa", 
-                          "Enchanting Design Accent Sofa Chair", 
-                          "Innovate Reclainer & Sofa", 
-                          "Sofa Crafter Solid Wood Super Soft Sofa"};
+    String[] sofaNames = {"Black Oak Lewis Bolstered Lounge Entryway Bench Three Seater Sofa",
+            "Home Furniture Wooden Sofa For Living-Room",
+            "Solid Wood Furniture Sheesham Wood Sofa",
+            "Solimo Roasio 1 Seater Sofa",
+            "Enchanting Design Accent Sofa Chair",
+            "Innovate Reclainer & Sofa",
+            "Sofa Crafter Solid Wood Super Soft Sofa"};
     double[] sofaPrices = {13999.00, 10799.00, 19998.00, 9799.00, 27899.00, 32869.00, 17499.00};
 
-    String[] dinningTableNames = {"Wakefit Dining Table", 
-                                  "Home Center Diana Beech Wood Veneer Finish", 
-                                  "Drifting Wood Zig Zag Solid Sheesham Wood Dining Table", 
-                                  "Solimo Indus Glass Round Dining Table", 
-                                  "OAK Nest Supreme Oak Circular Dining Table"};
+    String[] dinningTableNames = {"Wakefit Dining Table",
+            "Home Center Diana Beech Wood Veneer Finish",
+            "Drifting Wood Zig Zag Solid Sheesham Wood Dining Table",
+            "Solimo Indus Glass Round Dining Table",
+            "OAK Nest Supreme Oak Circular Dining Table"};
     double[] dinningTablePrices = {30710.00, 12999.00, 15969.00, 14599.00, 8500.00};
 
-    String[] bedNames = {"Caspian Furniture Wood Textured Single Bed", 
-                         "Studio Kook Tribe Leaf with Headboard Wood Single Bed", 
-                         "Solimo Lincum Single Bed", 
-                         "Wakefit Double Bed", 
-                         "Solid Sheesham Wood Mayor Palang King Size Bed", 
-                         "Geetanjali Decor Grace King Size Bed", 
-                         "Vaidik Furniture Solid Sheesham Wood King Size Bed"};
+    String[] bedNames = {"Caspian Furniture Wood Textured Single Bed",
+            "Studio Kook Tribe Leaf with Headboard Wood Single Bed",
+            "Solimo Lincum Single Bed",
+            "Wakefit Double Bed",
+            "Solid Sheesham Wood Mayor Palang King Size Bed",
+            "Geetanjali Decor Grace King Size Bed",
+            "Vaidik Furniture Solid Sheesham Wood King Size Bed"};
     double[] bedPrices = {7000.00, 26487.00, 28099.00, 25410.00, 68999.00, 53999.00, 32599.00};
 
-    String[] wardrobeNames = {"Solimo 2-Door Foldable Wardrobe", 
-                              "Solimo 3-Door Foldable Wardrobe", 
-                              "Lifewit 6-Tiers Multipurpose Foldable Wardrobe", 
-                              "CITRODA Multipurpose Shoe Wardrobe", 
-                              "AYSIS DIY Shoe Rack Organizer", 
-                              "Solimo Multipurpose Rack for Shoes", 
-                              "FLIPZON Baby Wardrobe Plastic Multipurpose 6 Shelve Wardrobe", 
-                              "BucketList Baby Wardrobe Door Plastic Sheet Kids Wardrobe", 
-                              "Nilkamal Freedome Big 1 (FB1) Plastic Cabinet", 
-                              "Sharan Almirah Multi Purpose Wardrobe", 
-                              "HEKAMI Interiors 4 Doors Wardrobe"};
+    String[] wardrobeNames = {"Solimo 2-Door Foldable Wardrobe",
+            "Solimo 3-Door Foldable Wardrobe",
+            "Lifewit 6-Tiers Multipurpose Foldable Wardrobe",
+            "CITRODA Multipurpose Shoe Wardrobe",
+            "AYSIS DIY Shoe Rack Organizer",
+            "Solimo Multipurpose Rack for Shoes",
+            "FLIPZON Baby Wardrobe Plastic Multipurpose 6 Shelve Wardrobe",
+            "BucketList Baby Wardrobe Door Plastic Sheet Kids Wardrobe",
+            "Nilkamal Freedome Big 1 (FB1) Plastic Cabinet",
+            "Sharan Almirah Multi Purpose Wardrobe",
+            "HEKAMI Interiors 4 Doors Wardrobe"};
     double[] wardrobePrices = {2069.00, 2349.00, 1399.00, 2149.00, 2147.00, 1369.00, 1095.00, 3969.00, 9999.00, 15507.00, 36969.00};
 
     public Furniture() {
@@ -970,6 +1031,7 @@ class Furniture {
         System.out.print("| Enter your choice: ");
         int paymentChoice = getValidChoice(1, 2);
 
+        Payment payment;
         switch (paymentChoice) {
             case 1:
                 // Card payment details
@@ -980,9 +1042,7 @@ class Furniture {
                 System.out.print("| Enter CVV (3 digits): ");
                 String cvv = getValidCVV();
 
-                // Process card payment
-                CardPayment cardPayment = new CardPayment(totalBill, cardNumber, expiryDate, cvv);
-                cardPayment.processPayment();
+                payment = new CardPayment(totalBill, cardNumber, expiryDate, cvv);
                 break;
 
             case 2:
@@ -990,14 +1050,30 @@ class Furniture {
                 System.out.print("| Enter UPI ID (e.g., example@upi): ");
                 String upiID = sc.nextLine();
 
-                // Process UPI payment
-                UPIPayment upiPayment = new UPIPayment(totalBill, upiID);
-                upiPayment.processPayment();
+                payment = new UPIPayment(totalBill, upiID);
                 break;
 
             default:
                 System.out.println("| Invalid choice.                  |");
                 System.out.println("====================================");
+                return;
+        }
+
+        // Process payment with typecasting
+        if (payment instanceof Discountable) {
+            Discountable discountable = (Discountable) payment;
+            totalBill = discountable.applyDiscount(totalBill);
+        }
+        payment.processPayment();
+
+        // Process refund if needed
+        if (payment instanceof Refundable) {
+            Refundable refundable = (Refundable) payment;
+            System.out.print("| Do you want to process a refund? (yes/no): ");
+            String refundChoice = sc.nextLine();
+            if (refundChoice.equalsIgnoreCase("yes")) {
+                refundable.processRefund();
+            }
         }
     }
 
